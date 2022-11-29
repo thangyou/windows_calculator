@@ -4,6 +4,8 @@ from PyQt5.QtWidgets import *
 class Main(QDialog):
     def __init__(self):
         super().__init__()
+        self.title = "계산기"
+        self.setWindowTitle(self.title)
         self.init_ui()
 
     def init_ui(self):
@@ -25,38 +27,40 @@ class Main(QDialog):
         layout_equation_solution.addRow(label_equation, self.equation)
         layout_equation_solution.addRow(label_solution, self.solution)
 
-        ### 사칙연상 버튼 생성
+        ### 연산 버튼
         button_plus = QPushButton("+")
         button_minus = QPushButton("-")
         button_product = QPushButton("x")
-        button_division = QPushButton("/")
+        button_equal = QPushButton("=")
 
         ### 사칙연산 버튼을 클릭했을 때, 각 사칙연산 부호가 수식창에 추가될 수 있도록 시그널 설정
         button_plus.clicked.connect(lambda state, operation = "+": self.button_operation_clicked(operation))
         button_minus.clicked.connect(lambda state, operation = "-": self.button_operation_clicked(operation))
         button_product.clicked.connect(lambda state, operation = "*": self.button_operation_clicked(operation))
-        button_division.clicked.connect(lambda state, operation = "/": self.button_operation_clicked(operation))
+        button_equal.clicked.connect(self.button_equal_clicked)
 
-        ### 사칙연산 버튼을 layout_operation 레이아웃에 추가
-        layout_operation.addWidget(button_plus)
-        layout_operation.addWidget(button_minus)
-        layout_operation.addWidget(button_product)
-        layout_operation.addWidget(button_division)
+        ### 버튼을 layout_operation 레이아웃에 추가
+        # layout_operation.addWidget(button_product, 0, 0)
+        # layout_operation.addWidget(button_minus, 1, 0)
+        # layout_operation.addWidget(button_plus, 2, 0 )
+        # layout_operation.addWidget(button_equal, 3, 0)
 
         ### =, clear, backspace 버튼 생성
-        button_equal = QPushButton("=")
         button_clear = QPushButton("Clear")
         button_backspace = QPushButton("Backspace")
 
+        button_division = QPushButton("/")
+
         ### =, clear, backspace 버튼 클릭 시 시그널 설정
-        button_equal.clicked.connect(self.button_equal_clicked)
         button_clear.clicked.connect(self.button_clear_clicked)
         button_backspace.clicked.connect(self.button_backspace_clicked)
+        button_division.clicked.connect(lambda state, operation = "/": self.button_operation_clicked(operation))
 
-        ### =, clear, backspace 버튼을 layout_clear_equal 레이아웃에 추가
-        layout_clear_equal.addWidget(button_clear)
-        layout_clear_equal.addWidget(button_backspace)
-        layout_clear_equal.addWidget(button_equal)
+        ### 버튼을 layout_clear_equal 레이아웃에 추가
+        # layout_operation1.addWidget(button_clear, 0, 2)
+        # layout_operation1.addWidget(button_backspace, 0, 3)
+        #
+        # layout_operation1.addWidget(button_division, 1, 3)
 
         ### 숫자 버튼 생성하고, layout_number 레이아웃에 추가
         ### 각 숫자 버튼을 클릭했을 때, 숫자가 수식창에 입력 될 수 있도록 시그널 설정
