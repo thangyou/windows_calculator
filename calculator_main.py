@@ -9,13 +9,13 @@ class Main(QDialog):
         self.init_ui()
 
     def init_ui(self):
-        main_layout = QVBoxLayout()
+        main_layout = QGridLayout()
 
         ### 각 위젯을 배치할 레이아웃을 미리 만들어 둠
-        layout_operation = QHBoxLayout()
-        layout_clear_equal = QHBoxLayout()
+        layout_equation_solution = QGridLayout()
+        layout_operation1 = QGridLayout()
+        layout_operation = QGridLayout()
         layout_number = QGridLayout()
-        layout_equation_solution = QFormLayout()
 
         ### 수식 입력과 답 출력을 위한 LineEdit 위젯 생성
         layout_equation_solution = QGridLayout()
@@ -41,10 +41,10 @@ class Main(QDialog):
         button_equal.clicked.connect(self.button_equal_clicked)
 
         ### 버튼을 layout_operation 레이아웃에 추가
-        # layout_operation.addWidget(button_product, 0, 0)
-        # layout_operation.addWidget(button_minus, 1, 0)
-        # layout_operation.addWidget(button_plus, 2, 0 )
-        # layout_operation.addWidget(button_equal, 3, 0)
+        layout_operation.addWidget(button_product, 0, 0)
+        layout_operation.addWidget(button_minus, 1, 0)
+        layout_operation.addWidget(button_plus, 2, 0)
+        layout_operation.addWidget(button_equal, 3, 0)
 
         ### 기존 계산기에 없는 항목(버튼)들 추가
         button_rest = QPushButton("%")
@@ -104,10 +104,8 @@ class Main(QDialog):
         layout_number.addWidget(button_dot, 3, 2)
 
         ### 각 레이아웃을 main_layout 레이아웃에 추가
-        main_layout.addLayout(layout_equation_solution)
-        main_layout.addLayout(layout_operation)
-        main_layout.addLayout(layout_clear_equal)
-        main_layout.addLayout(layout_number)
+        main_layout.addLayout(layout_equation_solution, 0, 0)
+        main_layout.addLayout(layout_operation1, 1, 0)
 
         self.setLayout(main_layout)
         self.show()
