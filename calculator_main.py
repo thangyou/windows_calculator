@@ -46,22 +46,40 @@ class Main(QDialog):
         # layout_operation.addWidget(button_plus, 2, 0 )
         # layout_operation.addWidget(button_equal, 3, 0)
 
-        ### =, clear, backspace 버튼 생성
-        button_clear = QPushButton("Clear")
+        ### 기존 계산기에 없는 항목(버튼)들 추가
+        button_rest = QPushButton("%")
+        button_clear = QPushButton("C") # Clear All
+        button_c_entry = QPushButton("CE") # Clear last char
         button_backspace = QPushButton("Backspace")
 
+        button_reciprocal = QPushButton("1/x") # 역수
+        button_square = QPushButton("x²") # 제곱
+        button_squ_root = QPushButton("²√x") # 제곱근
         button_division = QPushButton("/")
 
-        ### =, clear, backspace 버튼 클릭 시 시그널 설정
-        button_clear.clicked.connect(self.button_clear_clicked)
-        button_backspace.clicked.connect(self.button_backspace_clicked)
-        button_division.clicked.connect(lambda state, operation = "/": self.button_operation_clicked(operation))
+        ### 버튼 클릭 시 시그널 설정
+        # button_rest.clicked.connect(lambda state, operation = "%": self.button_operation_clicked(operation))
+        # button_clear.clicked.connect(self.button_clear_clicked)
+        # button_c_entry.clicked.connect(self.button_clear_entry_clicked)
+        # button_backspace.clicked.connect(self.button_backspace_clicked)
+        #
+        # button_reciprocal.clicked.connect(self.button_reciprocal_clicked)
+        # button_square.clicked.connect(self.button_square_clicked)
+        # button_squ_root.clicked.connect(self.button_squ_root_clicked)
+        # button_division.clicked.connect(lambda state, operation = "/": self.button_operation_clicked(operation))
 
         ### 버튼을 layout_clear_equal 레이아웃에 추가
-        # layout_operation1.addWidget(button_clear, 0, 2)
-        # layout_operation1.addWidget(button_backspace, 0, 3)
-        #
-        # layout_operation1.addWidget(button_division, 1, 3)
+        layout_operation1.addWidget(button_rest, 0, 0)
+        layout_operation1.addWidget(button_c_entry, 0, 1)
+        layout_operation1.addWidget(button_clear, 0, 2)
+        layout_operation1.addWidget(button_backspace, 0, 3)
+        layout_operation1.addWidget(button_reciprocal, 1, 0)
+        layout_operation1.addWidget(button_square, 1, 1)
+        layout_operation1.addWidget(button_squ_root, 1, 2)
+        layout_operation1.addWidget(button_division, 1, 3)
+
+        layout_operation1.addLayout(layout_operation, 2, 3, 1, 1)
+        layout_operation1.addLayout(layout_number, 2, 0, 1, 3)
 
         ### 숫자 버튼 생성하고, layout_number 레이아웃에 추가
         ### 각 숫자 버튼을 클릭했을 때, 숫자가 수식창에 입력 될 수 있도록 시그널 설정
@@ -76,14 +94,14 @@ class Main(QDialog):
             elif number==0:
                 layout_number.addWidget(number_button_dict[number], 3, 1)
 
-        ### 소숫점 버튼과 00 버튼을 입력하고 시그널 설정
+        ### reverse 버튼과 소숫점 버튼을 입력하고 시그널 설정
+        button_reverse = QPushButton("+/-")
+        button_reverse.clicked.connect(lambda state, num = "-1": self.button_reverse_clicked(num))
+        layout_number.addWidget(button_reverse, 3, 0)
+
         button_dot = QPushButton(".")
         button_dot.clicked.connect(lambda state, num = ".": self.number_button_clicked(num))
         layout_number.addWidget(button_dot, 3, 2)
-
-        button_double_zero = QPushButton("00")
-        button_double_zero.clicked.connect(lambda state, num = "00": self.number_button_clicked(num))
-        layout_number.addWidget(button_double_zero, 3, 0)
 
         ### 각 레이아웃을 main_layout 레이아웃에 추가
         main_layout.addLayout(layout_equation_solution)
