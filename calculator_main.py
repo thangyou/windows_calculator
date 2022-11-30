@@ -1,4 +1,6 @@
 import sys
+import math
+import numpy as np # atom numpy 설치 방법 확인 -> 실행 확인? ✓
 from PyQt5.QtWidgets import *
 
 class Main(QDialog):
@@ -17,6 +19,7 @@ class Main(QDialog):
         layout_number = QGridLayout()
 
         self.temp_number = 0
+        self.temp_another = 0
         self.temp_operator = ""
         self.fin_calc = 0 # 계산 완료 상태 변수 (False)
 
@@ -55,14 +58,14 @@ class Main(QDialog):
         button_division = QPushButton("/")
 
         ### 버튼 클릭 시 시그널 설정
-        # button_rest.clicked.connect(lambda state, operation = "%": self.button_operation_clicked(operation))
+        button_rest.clicked.connect(lambda state, operation = "%": self.button_operation_clicked(operation))
         button_clear.clicked.connect(self.button_clear_clicked)
         button_c_entry.clicked.connect(self.button_clear_entry_clicked)
         button_backspace.clicked.connect(self.button_backspace_clicked)
-        #
-        # button_inverse.clicked.connect(self.button_inverse_clicked)
-        # button_square.clicked.connect(self.button_square_clicked)
-        # button_squ_root.clicked.connect(self.button_squ_root_clicked)
+
+        button_inverse.clicked.connect(lambda state, operation = "inverse": self.button_operation_clicked(operation))
+        button_square.clicked.connect(lambda state, operation = "square": self.button_operation_clicked(operation))
+        button_squ_root.clicked.connect(lambda state, operation = "root": self.button_operation_clicked(operation))
         button_division.clicked.connect(lambda state, operation = "/": self.button_operation_clicked(operation))
 
         ### 버튼을 layout_operation1 레이아웃에 추가
@@ -112,56 +115,43 @@ class Main(QDialog):
     #################
     def number_button_clicked(self, num):
         if self.fin_calc != 0:
-            print('비워랏')
             self.equation.setText("")
         equation = self.equation.text()
         equation += str(num)
         self.fin_calc = 0
         self.equation.setText(equation)
-        # if solution != "":
-        #     self.equation.setText("")
-        # equation = self.equation.text()
-        # equation += str(num)
-        # self.equation.setText(equation)
-        # global tmp
-        # tmp = equation
-        # print('num : ' + tmp)
+        print('clicked num : ' + str(equation))
 
     def button_reverse_clicked(self, num):
         equation = self.equation.text()
-        equation = str(int(equation) * -1)
+        equation = str(float(equation) * -1)
         self.equation.setText(equation)
+        print('reversed num : ' + str(equation))
 
     def button_operation_clicked(self, operation):
+        print('operation : ' + operation)
         if operation not in ["square", "root", "inverse"]:
-            print('operation : ' + operation)
             self.temp_number = float(self.equation.text())
             self.equation.setText("")
             self.temp_operator = operation
+            pass
         else:
+            self.temp_another = float(self.equation.text())
             if operation == "square":
-                pass
+                self.temp_another = math.pow(self.temp_another, 2)
             if operation == "root":
-                pass
+                self.temp_another = math.sqrt(self.temp_another)
             if operation == "inverse":
-                pass
-
-            self.temp_operator = ""
-            self.temp_number = 0
-        # print('operation : ' + operation)
-        # print('tmp : ', tmp)
-        # global final
-        # final = tmp
-        # self.equation.setText("")
-        # global op
-        # op = operation
+                self.temp_another = np.reciprocal(self.temp_another)
+            self.equation.setText(str(self.temp_another))
+            self.fin_calc = 1
+            print('changed num : ' + str(self.temp_another))
+            self.temp_another = 0
 
     def button_equal_clicked(self):
-        # equation = self.equation.text()
-        # solution = eval(equation)
-        # self.equation.setText(str(solution))
         temp_second_number = float(self.equation.text())
-
+        if self.temp_another != 0:
+            self.temp_number = float(self.temp_another)
         if self.temp_operator == "+":
             temp_result = self.temp_number + temp_second_number
         if self.temp_operator == "-":
@@ -169,45 +159,23 @@ class Main(QDialog):
         if self.temp_operator == "*":
             temp_result = self.temp_number * temp_second_number
         if self.temp_operator == "/":
-            temp_result = self.temp_number / temp_second_number
+            if temp_second_number != 0.0:
+                temp_result = self.temp_number / temp_second_number
+            else:
+                temp_result = '0으로 나눌 수 없습니다.'
+        if self.temp_operator == "%":
+            if temp_second_number != 0.0:
+                temp_result = self.temp_number % temp_second_number
+            else:
+                temp_result = '0으로 나눌 수 없습니다.'
 
         self.equation.setText(str(temp_result))
+        print('result : ' + str(temp_result))
 
         self.temp_operator = ""
         self.temp_number = 0
+        self.temp_another = 0
         self.fin_calc = 1
-
-        # print('num1 : ' + final)
-        # print('num2 : ' + tmp)
-        # print('final math : ' + op)
-        # global solution
-        # if op == '+':
-        #     if '.' in tmp or '.' in final:
-        #         solution = str(float(tmp) + float(final))
-        #     else:
-        #         solution = str(int(final) + int(tmp))
-        # if op == '-':
-        #     if '.' in tmp or '.' in final:
-        #         solution = str(float(tmp) - float(final))
-        #     else:
-        #         solution = str(int(final) - int(tmp))
-        # if op == '*':
-        #     if '.' in tmp or '.' in final:
-        #         solution = str(float(tmp) * float(final))
-        #     else:
-        #         solution = str(int(final) * int(tmp))
-        # if op == '/':
-        #     if '.' in tmp or '.' in final:
-        #         solution = str(float(tmp) / float(final))
-        #     else:
-        #         solution = str(int(final) / int(tmp))
-        # if op == '%':
-        #     if '.' in tmp or '.' in final:
-        #         solution = str(float(tmp) % float(final))
-        #     else:
-        #         solution = str(int(final) % int(tmp))
-        # print('solution : ' + solution)
-        # self.equation.setText(str(solution))
 
     def button_clear_clicked(self):
         self.equation.setText("")
