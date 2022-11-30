@@ -16,6 +16,10 @@ class Main(QDialog):
         layout_operation2 = QGridLayout() # 기본 연산
         layout_number = QGridLayout()
 
+        self.temp_number = 0
+        self.temp_operator = ""
+        self.fin_calc = 0 # 계산 완료 상태 변수 (False)
+
         ### 수식 입력과 답 출력을 위한 LineEdit 위젯 통합 - issue #10
         layout_equation_solution = QGridLayout()
         self.equation = QLineEdit("")
@@ -45,28 +49,28 @@ class Main(QDialog):
         button_c_entry = QPushButton("CE") # Clear last char
         button_backspace = QPushButton("Backspace")
 
-        button_reciprocal = QPushButton("1/x") # 역수
+        button_inverse = QPushButton("1/x") # 역수
         button_square = QPushButton("x²") # 제곱
         button_squ_root = QPushButton("²√x") # 제곱근
         button_division = QPushButton("/")
 
         ### 버튼 클릭 시 시그널 설정
         # button_rest.clicked.connect(lambda state, operation = "%": self.button_operation_clicked(operation))
-        # button_clear.clicked.connect(self.button_clear_clicked)
-        # button_c_entry.clicked.connect(self.button_clear_entry_clicked)
-        # button_backspace.clicked.connect(self.button_backspace_clicked)
+        button_clear.clicked.connect(self.button_clear_clicked)
+        button_c_entry.clicked.connect(self.button_clear_entry_clicked)
+        button_backspace.clicked.connect(self.button_backspace_clicked)
         #
-        # button_reciprocal.clicked.connect(self.button_reciprocal_clicked)
+        # button_inverse.clicked.connect(self.button_inverse_clicked)
         # button_square.clicked.connect(self.button_square_clicked)
         # button_squ_root.clicked.connect(self.button_squ_root_clicked)
-        # button_division.clicked.connect(lambda state, operation = "/": self.button_operation_clicked(operation))
+        button_division.clicked.connect(lambda state, operation = "/": self.button_operation_clicked(operation))
 
         ### 버튼을 layout_operation1 레이아웃에 추가
         layout_operation1.addWidget(button_rest, 0, 0)
         layout_operation1.addWidget(button_c_entry, 0, 1)
         layout_operation1.addWidget(button_clear, 0, 2)
         layout_operation1.addWidget(button_backspace, 0, 3)
-        layout_operation1.addWidget(button_reciprocal, 1, 0)
+        layout_operation1.addWidget(button_inverse, 1, 0)
         layout_operation1.addWidget(button_square, 1, 1)
         layout_operation1.addWidget(button_squ_root, 1, 2)
         layout_operation1.addWidget(button_division, 1, 3)
@@ -81,7 +85,7 @@ class Main(QDialog):
             number_button_dict[number] = QPushButton(str(number))
             number_button_dict[number].clicked.connect(lambda state, num = number:
                                                        self.number_button_clicked(num))
-            if number >0:
+            if number > 0:
                 x,y = divmod(number-1, 3)
                 layout_number.addWidget(number_button_dict[number], x, y)
             elif number==0:
@@ -107,23 +111,109 @@ class Main(QDialog):
     ### functions ###
     #################
     def number_button_clicked(self, num):
+        if self.fin_calc != 0:
+            print('비워랏')
+            self.equation.setText("")
         equation = self.equation.text()
         equation += str(num)
+        self.fin_calc = 0
+        self.equation.setText(equation)
+        # if solution != "":
+        #     self.equation.setText("")
+        # equation = self.equation.text()
+        # equation += str(num)
+        # self.equation.setText(equation)
+        # global tmp
+        # tmp = equation
+        # print('num : ' + tmp)
+
+    def button_reverse_clicked(self, num):
+        equation = self.equation.text()
+        equation = str(int(equation) * -1)
         self.equation.setText(equation)
 
     def button_operation_clicked(self, operation):
-        equation = self.equation.text()
-        equation += operation
-        self.equation.setText(equation)
+        if operation not in ["square", "root", "inverse"]:
+            print('operation : ' + operation)
+            self.temp_number = float(self.equation.text())
+            self.equation.setText("")
+            self.temp_operator = operation
+        else:
+            if operation == "square":
+                pass
+            if operation == "root":
+                pass
+            if operation == "inverse":
+                pass
+
+            self.temp_operator = ""
+            self.temp_number = 0
+        # print('operation : ' + operation)
+        # print('tmp : ', tmp)
+        # global final
+        # final = tmp
+        # self.equation.setText("")
+        # global op
+        # op = operation
 
     def button_equal_clicked(self):
-        equation = self.equation.text()
-        solution = eval(equation)
-        self.solution.setText(str(solution))
+        # equation = self.equation.text()
+        # solution = eval(equation)
+        # self.equation.setText(str(solution))
+        temp_second_number = float(self.equation.text())
+
+        if self.temp_operator == "+":
+            temp_result = self.temp_number + temp_second_number
+        if self.temp_operator == "-":
+            temp_result = self.temp_number - temp_second_number
+        if self.temp_operator == "*":
+            temp_result = self.temp_number * temp_second_number
+        if self.temp_operator == "/":
+            temp_result = self.temp_number / temp_second_number
+
+        self.equation.setText(str(temp_result))
+
+        self.temp_operator = ""
+        self.temp_number = 0
+        self.fin_calc = 1
+
+        # print('num1 : ' + final)
+        # print('num2 : ' + tmp)
+        # print('final math : ' + op)
+        # global solution
+        # if op == '+':
+        #     if '.' in tmp or '.' in final:
+        #         solution = str(float(tmp) + float(final))
+        #     else:
+        #         solution = str(int(final) + int(tmp))
+        # if op == '-':
+        #     if '.' in tmp or '.' in final:
+        #         solution = str(float(tmp) - float(final))
+        #     else:
+        #         solution = str(int(final) - int(tmp))
+        # if op == '*':
+        #     if '.' in tmp or '.' in final:
+        #         solution = str(float(tmp) * float(final))
+        #     else:
+        #         solution = str(int(final) * int(tmp))
+        # if op == '/':
+        #     if '.' in tmp or '.' in final:
+        #         solution = str(float(tmp) / float(final))
+        #     else:
+        #         solution = str(int(final) / int(tmp))
+        # if op == '%':
+        #     if '.' in tmp or '.' in final:
+        #         solution = str(float(tmp) % float(final))
+        #     else:
+        #         solution = str(int(final) % int(tmp))
+        # print('solution : ' + solution)
+        # self.equation.setText(str(solution))
 
     def button_clear_clicked(self):
         self.equation.setText("")
-        self.solution.setText("")
+
+    def button_clear_entry_clicked(self):
+        self.equation.setText("")
 
     def button_backspace_clicked(self):
         equation = self.equation.text()
