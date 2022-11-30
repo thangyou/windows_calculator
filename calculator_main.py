@@ -17,15 +17,9 @@ class Main(QDialog):
         layout_operation = QGridLayout()
         layout_number = QGridLayout()
 
-        ### 수식 입력과 답 출력을 위한 LineEdit 위젯 생성
+        ### 수식 입력과 답 출력을 위한 LineEdit 위젯 통합 - issue #10
         layout_equation_solution = QGridLayout()
-
-        self.solution = QLabel()
-        self.equation = QLineEdit("0")
-        #self.equation.textChanged.connect(self.solution.setText)
-
-        ### layout_equation_solution 레이아웃에 수식, 답 위젯을 추가
-        layout_equation_solution.addWidget(self.solution)
+        self.equation = QLineEdit("")
         layout_equation_solution.addWidget(self.equation)
 
         ### 연산 버튼
