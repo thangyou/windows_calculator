@@ -9,23 +9,16 @@ class Main(QDialog):
         self.init_ui()
 
     def init_ui(self):
+        ### 레이아웃 설정
         main_layout = QGridLayout()
-
-        ### 각 위젯을 배치할 레이아웃을 미리 만들어 둠
         layout_equation_solution = QGridLayout()
-        layout_operation1 = QGridLayout()
-        layout_operation = QGridLayout()
+        layout_operation1 = QGridLayout() # 추가 연산
+        layout_operation2 = QGridLayout() # 기본 연산
         layout_number = QGridLayout()
 
-        ### 수식 입력과 답 출력을 위한 LineEdit 위젯 생성
+        ### 수식 입력과 답 출력을 위한 LineEdit 위젯 통합 - issue #10
         layout_equation_solution = QGridLayout()
-
-        self.solution = QLabel()
-        self.equation = QLineEdit("0")
-        #self.equation.textChanged.connect(self.solution.setText)
-
-        ### layout_equation_solution 레이아웃에 수식, 답 위젯을 추가
-        layout_equation_solution.addWidget(self.solution)
+        self.equation = QLineEdit("")
         layout_equation_solution.addWidget(self.equation)
 
         ### 연산 버튼
@@ -34,17 +27,17 @@ class Main(QDialog):
         button_product = QPushButton("x")
         button_equal = QPushButton("=")
 
-        ### 사칙연산 버튼을 클릭했을 때, 각 사칙연산 부호가 수식창에 추가될 수 있도록 시그널 설정
+        ### 연산 버튼을 클릭했을 때, 각 부호가 수식창에 추가될 수 있도록 시그널 설정
         button_plus.clicked.connect(lambda state, operation = "+": self.button_operation_clicked(operation))
         button_minus.clicked.connect(lambda state, operation = "-": self.button_operation_clicked(operation))
         button_product.clicked.connect(lambda state, operation = "*": self.button_operation_clicked(operation))
         button_equal.clicked.connect(self.button_equal_clicked)
 
-        ### 버튼을 layout_operation 레이아웃에 추가
-        layout_operation.addWidget(button_product, 0, 0)
-        layout_operation.addWidget(button_minus, 1, 0)
-        layout_operation.addWidget(button_plus, 2, 0)
-        layout_operation.addWidget(button_equal, 3, 0)
+        ### 버튼을 layout_operation2 레이아웃에 추가
+        layout_operation2.addWidget(button_product, 0, 0)
+        layout_operation2.addWidget(button_minus, 1, 0)
+        layout_operation2.addWidget(button_plus, 2, 0)
+        layout_operation2.addWidget(button_equal, 3, 0)
 
         ### 기존 계산기에 없는 항목(버튼)들 추가
         button_rest = QPushButton("%")
@@ -68,7 +61,7 @@ class Main(QDialog):
         # button_squ_root.clicked.connect(self.button_squ_root_clicked)
         # button_division.clicked.connect(lambda state, operation = "/": self.button_operation_clicked(operation))
 
-        ### 버튼을 layout_clear_equal 레이아웃에 추가
+        ### 버튼을 layout_operation1 레이아웃에 추가
         layout_operation1.addWidget(button_rest, 0, 0)
         layout_operation1.addWidget(button_c_entry, 0, 1)
         layout_operation1.addWidget(button_clear, 0, 2)
@@ -78,7 +71,7 @@ class Main(QDialog):
         layout_operation1.addWidget(button_squ_root, 1, 2)
         layout_operation1.addWidget(button_division, 1, 3)
 
-        layout_operation1.addLayout(layout_operation, 2, 3, 1, 1)
+        layout_operation1.addLayout(layout_operation2, 2, 3, 1, 1)
         layout_operation1.addLayout(layout_number, 2, 0, 1, 3)
 
         ### 숫자 버튼 생성하고, layout_number 레이아웃에 추가
