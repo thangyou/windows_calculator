@@ -14,6 +14,12 @@ To execute the calculator, PyQt5 must be installed.
 python -m pip install pyqt5
 ```
 
+If you use 'Atom', NumPy must be installed, too.
+```
+python pip install numpy
+```
+<img width="725" alt="image" src="https://user-images.githubusercontent.com/117428920/204777551-c31c399a-621b-49a2-b9b7-ba059ad56f91.png">
+
 ## Built With
 
 * [PyQt5](https://pypi.org/project/PyQt5/) - The GUI framework used
