@@ -28,6 +28,13 @@ python pip install numpy
 
 * [PyQt5](https://pypi.org/project/PyQt5/) - The GUI framework used
 
+
+## Branch list
+* main - default
+* issue #1's sub-issues #3 ~ #6, and #10 - UI
+* issue #2's sub-issues #7, #8 - Func
+* css issue #15
+
 ## Contributing
 
 Please read [CONTRIBUTING.md](https://github.com/shyoo17/gui_calculator/blob/main/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
@@ -35,9 +42,9 @@ Please read [CONTRIBUTING.md](https://github.com/shyoo17/gui_calculator/blob/mai
 ## Authors
 
 * **studyingrabbit** - *Initial work* - [studyingrabbit](https://studyingrabbit.tistory.com/)
-* **Seungho Yoo** - *Init repository* - this repository
+* **thangyou** - *Init repository* - this repository
 
-See also the list of [contributors](https://github.com/shyoo17/gui_calculator/blob/main/CONTRIBUTORS.md) who participated in this project.
+See also the list of [contributors](https://github.com/thangyou/windows_calculator/blob/main/CONTRIBUTORS.md) who participated in this project.
 
 ## License
 
