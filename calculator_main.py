@@ -60,8 +60,9 @@ class Main(QDialog):
         layout_operation2 = QGridLayout() # 기본 연산
         layout_number = QGridLayout()
 
-        self.temp_number = 0
-        self.temp_another = 0
+        ### global var
+        self.temp_number = 0 # 기본 연산 결과
+        self.temp_another = 0 # 추가 연산 결과
         self.temp_operator = ""
         self.fin_calc = 0 # 계산 완료 상태 변수 (False)
 
@@ -131,8 +132,10 @@ class Main(QDialog):
             number_button_dict[number].clicked.connect(lambda state, num = number:
                                                        self.number_button_clicked(num))
             if number > 0:
-                x,y = divmod(number-1, 3)
-                layout_number.addWidget(number_button_dict[number], x, y)
+                x = int((( 9 - number ) / 3 ) + 1 )
+                y = (( number - 1 ) % 3)
+                print(str(number) + ' : ' + str(x) + ',' + str(y))
+                layout_number.addWidget(number_button_dict[number], x-1, y, 1, 1)
             elif number==0:
                 layout_number.addWidget(number_button_dict[number], 3, 1)
 
@@ -151,7 +154,6 @@ class Main(QDialog):
 
         self.setLayout(main_layout)
         self.show()
-
 
     #################
     ### functions ###
@@ -179,6 +181,7 @@ class Main(QDialog):
             self.temp_operator = operation
             pass
         else:
+            ### square, root, inverse 연산의 사칙 연산 - fix
             self.temp_another = float(self.equation.text())
             if operation == "square":
                 self.temp_another = math.pow(self.temp_another, 2)
@@ -202,6 +205,7 @@ class Main(QDialog):
         if self.temp_operator == "*":
             temp_result = self.temp_number * temp_second_number
         if self.temp_operator == "/":
+            ### 0 -> 창 닫힘 - fix
             if temp_second_number != 0.0:
                 temp_result = self.temp_number / temp_second_number
             else:
