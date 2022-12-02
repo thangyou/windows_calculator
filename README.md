@@ -6,6 +6,10 @@ This calculator is based on studyingrabbit's work (https://studyingrabbit.tistor
 
 This repository created for the OSS project.
 
+<img width="197" alt="image" src="https://user-images.githubusercontent.com/117428920/205302820-072c8793-cde4-4855-8ad8-7e2ded575539.png">
+
+
+
 ### Prerequisites
 
 To execute the calculator, PyQt5 must be installed.
@@ -31,9 +35,9 @@ Please read [CONTRIBUTING.md](https://github.com/shyoo17/gui_calculator/blob/mai
 ## Authors
 
 * **studyingrabbit** - *Initial work* - [studyingrabbit](https://studyingrabbit.tistory.com/)
-* **Seungho Yoo** - *Init repository* - this repository
+* **thangyou** - *Init repository* - this repository
 
-See also the list of [contributors](https://github.com/shyoo17/gui_calculator/blob/main/CONTRIBUTORS.md) who participated in this project.
+See also the list of [contributors](https://github.com/thangyou/windows_calculator/CONTRIBUTORS.md) who participated in this project.
 
 ## License
 
@@ -44,6 +48,3 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 * Hat tip to anyone whose code was used
 * Inspiration
 * etc
-
-## On a side note
-> I was doing my assignment using another repository. However, several file conflicts occurred while handling issues, making serveral mistakes. I wanted to solve it, but I couldn't. So I created a new repository. The task was almost finished, working 'pull request'. It breaks my heart. 😂
