@@ -35,7 +35,7 @@ class QLineEdit(QLineEdit):
         super().__init__(parent)
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.setReadOnly(True)
-        self.setAlignment(Qt.AlignRight)	
+        self.setAlignment(Qt.AlignRight)
         font = QFont("Helvetia", 13)
         self.setFont(font)
 

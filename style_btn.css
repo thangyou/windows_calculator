@@ -34,13 +34,8 @@ QPushButtonEqual{
   color: black;
   border-radius: 5px;
   padding: 20px;
-  margin: 0px;
 }
 
-QLineEdit:hover{
-  text-indent: inherit;
-  text-transform: capitalize;
-}
 QPushButtonNumber:hover{
   background-color:#313131;
   color:white;
@@ -53,4 +48,12 @@ QPushButtonOperation:hover{
   color:white;
   border-radius:5px;
   padding: 20px;
+}
+
+QPushButtonEqual:hover{
+  background-color: #4cb1ff;
+  color: black;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 0px;
 }
