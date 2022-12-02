@@ -6,6 +6,10 @@ This calculator is based on studyingrabbit's work (https://studyingrabbit.tistor
 
 This repository created for the OSS project.
 
+
+<img width="199" alt="image" src="https://user-images.githubusercontent.com/117428920/205240119-5c8e081a-8c25-4dbf-b79d-665cf3427dfd.png">
+
+
 ### Prerequisites
 
 To execute the calculator, PyQt5 must be installed.
@@ -44,6 +48,3 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 * Hat tip to anyone whose code was used
 * Inspiration
 * etc
-
-## On a side note
-> I was doing my assignment using another repository. However, several file conflicts occurred while handling issues, making serveral mistakes. I wanted to solve it, but I couldn't. So I created a new repository. The task was almost finished, working 'pull request'. It breaks my heart. 😂
