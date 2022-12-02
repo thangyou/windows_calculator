@@ -1,0 +1,57 @@
+QDialog{
+  background: #171717;
+  margin: 20px;
+}
+
+QLineEdit{
+  background:#171717;
+  color:white;
+  border-radius:5px;
+  padding: 20px;
+  text-align: right;
+  font-weight: bold;
+}
+
+QPushButtonOperation{
+  background-color:#313131;
+  color:white;
+  border-radius:5px;
+  padding: 20px;
+}
+
+QPushButtonNumber{
+  background-color:#666666;
+  color:white;
+  border-radius:5px;
+  padding: 20px;
+  margin: 0px;
+}
+
+QPushButtonEqual{
+  background-color:#4cc2ff;
+  color: black;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+QPushButtonNumber:hover{
+  background-color:#313131;
+  color:white;
+  border-radius:5px;
+  padding: 20px;
+}
+
+QPushButtonOperation:hover{
+  background-color:#666666;
+  color:white;
+  border-radius:5px;
+  padding: 20px;
+}
+
+QPushButtonEqual:hover{
+  background-color: #4cb1ff;
+  color: black;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 0px;
+}
